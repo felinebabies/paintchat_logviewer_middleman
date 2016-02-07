@@ -16,6 +16,19 @@ page '/*.txt', layout: false
 # proxy "/this-page-has-no-template.html", "/template-file.html", locals: {
 #  which_fake_page: "Rendering a fake page with a local variable" }
 
+# お絵かきチャットログ個別ページを動的に生成する
+logDir = './source/paintchatlog/'
+Dir::foreach(logDir) do |f|
+  if f == '.' || f == '..' then
+    next
+  end
+
+  if FileTest::directory?(File.join(logDir, f)) then
+    print "proxy :#{File.join(logDir, f)}"
+    proxy "/paintchatlog/#{f}/index.html", "/logviewer.html", :locals => {:datestr => f}, :ignore => true
+  end
+end
+
 # General configuration
 
 # Reload the browser automatically whenever files change
@@ -42,3 +55,6 @@ configure :build do
   # Minify Javascript on build
   # activate :minify_javascript
 end
+
+# ビューア用テンプレートの無効化
+set :kayout

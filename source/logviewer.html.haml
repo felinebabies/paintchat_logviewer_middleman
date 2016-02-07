@@ -1,0 +1,11 @@
+---
+title: Log viewer ： Feline babies paint chat gallery
+type: logviewer
+---
+%h1
+  = datestr
+
+- Dir::glob("./source/paintchatlog/#{datestr}/*.png").each do |item|
+  .layerImage
+    - layerPath = File.join("/paintchatlog/#{datestr}/", File.basename(item))
+    = image_tag layerPath

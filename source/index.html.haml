@@ -1,0 +1,11 @@
+---
+title: Feline babies paint chat gallery
+type: index
+---
+%h1
+  Feline babiesお絵かきチャットログ
+%ul
+  - sitemap.resources.select {|item| item.data['type'] == 'logviewer'}.each do |item|
+    %li
+      = link_to item.url do
+        = item.locals[:datestr]
