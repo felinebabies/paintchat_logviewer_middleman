@@ -7,5 +7,5 @@ type: index
 %ul
   - sitemap.resources.select {|item| item.data['type'] == 'logviewer'}.each do |item|
     %li
-      = link_to item.url do
+      = link_to File.join(item.url, "index.html") do
         = item.locals[:datestr]

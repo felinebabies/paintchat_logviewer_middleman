@@ -25,7 +25,12 @@ Dir::foreach(logDir) do |f|
 
   if FileTest::directory?(File.join(logDir, f)) then
     print "proxy :#{File.join(logDir, f)}"
-    proxy "/paintchatlog/#{f}/index.html", "/logviewer.html", :locals => {:datestr => f}, :ignore => true
+
+    # ディレクトリ内の画像ファイル一覧を各ページに渡す
+    layers = Dir.glob(File.join(logDir, f, "*.png"))
+    print layers
+
+    proxy "/paintchatlog/#{f}/index.html", "/logviewer.html", :locals => {:datestr => f, :layers => layers}, :ignore => true
   end
 end
 
@@ -56,5 +61,6 @@ configure :build do
   # activate :minify_javascript
 end
 
-# ビューア用テンプレートの無効化
-set :kayout
+# 相対パスにする
+activate :relative_assets
+set :relative_links, true

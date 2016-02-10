@@ -5,7 +5,49 @@ type: logviewer
 %h1
   = datestr
 
-- Dir::glob("./source/paintchatlog/#{datestr}/*.png").each do |item|
-  .layerImage
-    - layerPath = File.join("/paintchatlog/#{datestr}/", File.basename(item))
-    = image_tag layerPath
+%canvas#paintChatCanvas{:width => "1920", :height => "1080"}
+:javascript
+  onload = function() {
+    clearWhite();
+    draw();
+  }
+
+  function clearWhite(){
+    var canvas = document.getElementById('paintChatCanvas');
+    if ( ! canvas || ! canvas.getContext ) { return false; }
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = "rgb(255, 255, 255)"
+    ctx.fillRect(0, 0, 1920, 1080);
+  }
+
+  var g_layerCounter;
+  function draw() {
+    var canvas = document.getElementById('paintChatCanvas');
+    if ( ! canvas || ! canvas.getContext ) { return false; }
+    var ctx = canvas.getContext('2d');
+
+    var layers = [ "#{layers.map{|item| File.basename(item)}.join('","')}" ];
+    var imgArr = Array(layers.length);
+    g_layerCounter = 0;
+    for(var i = 0 ; i < layers.length ; i++){
+      imgArr[i] = new Image();
+      imgArr[i].src = layers[i] + "?" + new Date().getTime();
+      imgArr[i].onload = function() {
+        if(g_layerCounter >= layers.length - 1){
+          for(var j = layers.length - 1 ; j >= 0 ; j--){
+            ctx.drawImage(imgArr[j], 0, 0);
+          }
+        }
+        else {
+          g_layerCounter++;
+        }
+      }
+    }
+  }
+
+-# IMGタグで画像を出力する場合
+-#
+  - layers.each do |item|
+    .layerImage
+      - layerPath = File.join("/paintchatlog/#{datestr}/", File.basename(item))
+      = image_tag layerPath
