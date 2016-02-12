@@ -6,6 +6,7 @@ type: index
   Feline babiesお絵かきチャットログ
 %ul
   - sitemap.resources.select {|item| item.data['type'] == 'logviewer'}.each do |item|
+    - loggedTimeObj = Time.strptime(item.locals[:datestr], "%Y_%m_%d_%H_%M_%S")
     %li
       = link_to File.join(item.url, "index.html") do
-        = item.locals[:datestr]
+        = loggedTimeObj.strftime("%Y年%m月%d日のログ（%H時%M分記録）")

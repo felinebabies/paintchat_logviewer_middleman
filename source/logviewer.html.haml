@@ -2,8 +2,15 @@
 title: Log viewer ： Feline babies paint chat gallery
 type: logviewer
 ---
+- loggedTimeObj = Time.strptime(datestr, "%Y_%m_%d_%H_%M_%S")
 %h1
-  = datestr
+  = loggedTimeObj.strftime("%Y年%m月%d日のログ（%H時%M分記録）")
+
+%ul.singleLayers
+  - layers.each_with_index do |item, idx|
+    %li
+      = link_to File.basename(item) do
+        = "レイヤー#{idx}"
 
 %canvas#paintChatCanvas{:width => "1920", :height => "1080"}
 :javascript
