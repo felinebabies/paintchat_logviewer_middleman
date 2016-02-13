@@ -7,10 +7,15 @@ type: logviewer
   = loggedTimeObj.strftime("%Y年%m月%d日のログ（%H時%M分記録）")
 
 %ul.singleLayers
+  %p
+    レイヤー個別閲覧
   - layers.each_with_index do |item, idx|
     %li
       = link_to File.basename(item) do
         = "レイヤー#{idx}"
+
+%p.returnToIndex
+  = link_to "ログ一覧に戻る", "/index.html"
 
 %canvas#paintChatCanvas{:width => "1920", :height => "1080"}
 :javascript

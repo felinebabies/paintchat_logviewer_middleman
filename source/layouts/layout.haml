@@ -6,8 +6,18 @@
     %meta{:charset => "utf-8"}/
     %meta{:content => "width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no", :name => "viewport"}/
     / Use title if it's in the page YAML frontmatter
-    %title= current_page.data.title || "eline babies paint chat gallery"
-    = stylesheet_link_tag :site
+    %title= current_page.data.title || "Feline babies paint chat gallery"
+    = stylesheet_link_tag :common
     = javascript_include_tag :all
   %body{:class => page_classes}
-    = yield
+    .container
+      %header
+        %h1
+          = link_to '/index.html' do
+            Feline babiesお絵かきチャットログ
+      %article.content
+        = yield
+
+      .grid
+        %footer
+          Paintchat log generator by 2016 Syuji, 2016 Feline babies

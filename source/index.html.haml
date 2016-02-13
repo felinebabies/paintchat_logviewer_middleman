@@ -3,9 +3,15 @@ title: Feline babies paint chat gallery
 type: index
 ---
 %h1
-  Feline babiesお絵かきチャットログ
+  お絵かきチャットログ一覧
+
+%p
+  = link_to "Feline babiesお絵かきチャット", "http://pchat.lab.omhouse.mydns.jp/"
+  のログ保管庫です。
+  %br
+  レイヤー別にも鑑賞できます。
 %ul
-  - sitemap.resources.select {|item| item.data['type'] == 'logviewer'}.each do |item|
+  - sitemap.resources.select {|item| item.data['type'] == 'logviewer'}.reverse.each do |item|
     - loggedTimeObj = Time.strptime(item.locals[:datestr], "%Y_%m_%d_%H_%M_%S")
     %li
       = link_to File.join(item.url, "index.html") do
