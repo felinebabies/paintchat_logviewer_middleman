@@ -61,6 +61,9 @@ configure :build do
   # activate :minify_javascript
 end
 
+# 無視するファイル
+ignore "/middleman_sample.html"
+
 # 相対パスにする
 activate :relative_assets
 set :relative_links, true
