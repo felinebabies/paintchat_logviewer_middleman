@@ -11,7 +11,7 @@ type: index
   %br
   レイヤー別にも鑑賞できます。
 %ul
-  - sitemap.resources.select {|item| item.data['type'] == 'logviewer'}.reverse.each do |item|
+  - sitemap.resources.select {|item| item.data['type'] == 'logviewer'}.sort{|a, b| b.locals[:datestr] <=> a.locals[:datestr]}.reverse.each do |item|
     - loggedTimeObj = Time.strptime(item.locals[:datestr], "%Y_%m_%d_%H_%M_%S")
     %li
       = link_to File.join(item.url, "index.html") do
